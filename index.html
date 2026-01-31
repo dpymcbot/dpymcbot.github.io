@@ -265,9 +265,9 @@
         async function fetchStatus() {
             try {
                 const [resK, resP, resKi] = await Promise.all([
-                    fetch('https://api.mcsrvstat.us/bedrock/3/162.43.54.31'),
+                    fetch('https://api.mcsrvstat.us/bedrock/3/210.131.218.134'),
                     fetch('https://api.mcsrvstat.us/bedrock/3/162.43.47.140'),
-                    fetch('https://api.mcsrvstat.us/bedrock/3/210.131.220.199')
+                    fetch('https://api.mcsrvstat.us/bedrock/3/162.43.54.31')
                 ]);
                 const dK = await resK.json();
                 const dP = await resP.json();
