@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>こん鯖 | 公式サイト</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4dabf7;
+            --secondary: #ff922b;
+            --bg-dark: #0d1117;
+            --card-bg: #161b22;
+            --text-white: #f0f6fc;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(rgba(13, 17, 23, 0.7), var(--bg-dark)), url('connsaba.png') center/cover no-repeat;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 10vw, 5rem);
+            font-weight: 900;
+            margin: 0;
+            background: linear-gradient(to right, #fff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .ip-box {
+            margin-top: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px 40px;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: 0.3s;
+            animation: fadeInUp 1s ease-out backwards;
+        }
+
+        .ip-box:hover {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary);
+            box-shadow: 0 0 30px rgba(77, 171, 247, 0.3);
+        }
+
+        .ip-text { font-size: 1.4rem; font-weight: 900; letter-spacing: 1.5px; }
+
+        .status-wrapper {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            max-width: 900px;
+            margin: -40px auto 80px;
+            padding: 0 20px;
+        }
+
+        .status-card {
+            background: var(--card-bg);
+            flex: 1;
+            min-width: 250px;
+            padding: 25px;
+            border-radius: 24px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+            animation: fadeInUp 1.2s ease-out backwards;
+        }
+
+        .status-card.onepiece { border-bottom: 4px solid var(--secondary); }
+        .status-card.connsaba { border-bottom: 4px solid var(--primary); }
+
+        .online-indicator {
+            color: #51cf66;
+            font-weight: bold;
+            font-size: 0.75rem;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .player-count {
+            font-size: 2.2rem;
+            font-weight: 900;
+            margin: 10px 0;
+            font-family: 'Arial', sans-serif;
+            color: #fff;
+        }
+
+        /* 運営一覧セクション */
+        .staff-section {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 80px 20px;
+            margin-bottom: 80px;
+        }
+
+        .staff-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            max-width: 900px;
+            margin: 40px auto 0;
+        }
+
+        .staff-card {
+            background: var(--card-bg);
+            padding: 30px 20px;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: 0.3s;
+        }
+
+        .staff-card:hover {
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .staff-role {
+            font-size: 0.7rem;
+            font-weight: 900;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .staff-name {
+            font-size: 1.2rem;
+            font-weight: 900;
+        }
+
+        /* 紹介カード */
+        .container { max-width: 1000px; margin: 0 auto 100px; padding: 0 20px; }
+        .section-title { text-align: center; font-size: 2rem; margin-bottom: 40px; font-weight: 900; }
+
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
+        .intro-card { background: var(--card-bg); border-radius: 24px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; }
+        .intro-card img { width: 100%; height: 240px; object-fit: cover; }
+        .card-body { padding: 25px; }
+
+        #toast {
+            position: fixed; bottom: -80px; left: 50%; transform: translateX(-50%);
+            background: white; color: black; padding: 14px 45px; border-radius: 100px;
+            font-weight: 900; box-shadow: 0 10px 30px rgba(0,0,0,0.4); transition: 0.5s; z-index: 1000;
+        }
+        #toast.active { bottom: 40px; }
+
+        footer { text-align: center; padding: 60px 0; opacity: 0.4; font-size: 0.75rem; }
+    </style>
+</head>
+<body>
+
+    <div id="toast">✅ IPアドレスをコピーしました</div>
+
+    <header class="hero">
+        <h1>こん鯖</h1>
+        <p>一人で遊ぶより、みんなで創るほうが面白い。</p>
+        <div class="ip-box" onclick="copyIP('210.131.218.134')">
+            <div style="font-size: 0.6rem; opacity: 0.5; margin-bottom: 3px; font-weight: bold; letter-spacing: 2px;">CLICK TO COPY</div>
+            <div class="ip-text">210.131.218.134</div>
+        </div>
+    </header>
+
+    <div class="status-wrapper">
+        <div class="status-card connsaba">
+            <span class="online-indicator">● ONLINE</span>
+            <h3 style="margin: 0; font-size: 1.1rem; opacity: 0.8;">こんさば</h3>
+            <div class="player-count" id="count-kon">-- / --</div>
+        </div>
+        <div class="status-card onepiece">
+            <span class="online-indicator">● ONLINE</span>
+            <h3 style="margin: 0; font-size: 1.1rem; opacity: 0.8;">ワンピースServer</h3>
+            <div class="player-count" id="count-piece">-- / --</div>
+        </div>
+    </div>
+
+    <section class="staff-section">
+        <h2 class="section-title" style="margin-bottom: 10px;">ADMINISTRATION</h2>
+        <p style="text-align: center; opacity: 0.5; font-size: 0.9rem;">サーバーを支える運営メンバー</p>
+        <div class="staff-grid">
+            <div class="staff-card">
+                <div class="staff-role">Owner / Admin</div>
+                <div class="staff-name">maronn1219</div>
+            </div>
+            <div class="staff-card">
+                <div class="staff-role">Staff</div>
+                <div class="staff-name">jumping high450</div>
+            </div>
+            <div class="staff-card">
+                <div class="staff-role">Staff</div>
+                <div class="staff-name">ralifum</div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <h2 class="section-title">SERVER GUIDE</h2>
+        <div class="card-grid">
+            <div class="intro-card">
+                <img src="connsaba.png" alt="こんさば">
+                <div class="card-body">
+                    <h3 style="margin:0 0 10px;">こんさば (生活鯖)</h3>
+                    <p style="opacity:0.7; font-size: 0.9rem;">独自アドオンで快適なサバイバルを提供。誰でも気軽に参加できるコミュニティ重視のサーバーです。</p>
+                </div>
+            </div>
+            <div class="intro-card">
+                <img src="onepiece.png" alt="ワンピースサーバー">
+                <div class="card-body">
+                    <h3 style="margin:0 0 10px;">ワンピースServer</h3>
+                    <p style="opacity:0.7; font-size: 0.9rem;">24時間稼働。能力者となり仲間と冒険へ。マイクラで本格的なワンピースの世界を体験できます。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 こん鯖 | Created by conn</p>
+    </footer>
+
+    <script>
+        function copyIP(ip) {
+            navigator.clipboard.writeText(ip);
+            const toast = document.getElementById('toast');
+            toast.classList.add('active');
+            setTimeout(() => { toast.classList.remove('active'); }, 2500);
+        }
+
+        async function fetchStatus() {
+            try {
+                const [resKon, resPiece] = await Promise.all([
+                    fetch('https://api.mcsrvstat.us/bedrock/3/210.131.218.134'),
+                    fetch('https://api.mcsrvstat.us/bedrock/3/162.43.47.140')
+                ]);
+                const dataKon = await resKon.json();
+                const dataPiece = await resPiece.json();
+                if(dataKon.online) document.getElementById('count-kon').innerText = `${dataKon.players.online} / ${dataKon.players.max}`;
+                if(dataPiece.online) document.getElementById('count-piece').innerText = `${dataPiece.players.online} / ${dataPiece.players.max}`;
+            } catch (error) { console.error("fetch error"); }
+        }
+        fetchStatus();
+        setInterval(fetchStatus, 60000);
+    </script>
+</body>
+</html>
