@@ -10,6 +10,7 @@
         :root {
             --primary: #4dabf7;
             --secondary: #ff922b;
+            --discord: #5865F2;
             --bg-dark: #0d1117;
             --card-bg: #161b22;
             --text-white: #f0f6fc;
@@ -29,19 +30,20 @@
             overflow-x: hidden;
         }
 
+        /* ヒーローセクション */
         .hero {
-            height: 60vh;
+            height: 65vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            background: linear-gradient(rgba(13, 17, 23, 0.7), var(--bg-dark)), url('connsaba.png') center/cover no-repeat;
+            background: linear-gradient(rgba(13, 17, 23, 0.75), var(--bg-dark)), url('connsaba.png') center/cover no-repeat;
             padding: 0 20px;
         }
 
         .hero h1 {
-            font-size: clamp(3rem, 10vw, 5rem);
+            font-size: clamp(3.5rem, 12vw, 5.5rem);
             font-weight: 900;
             margin: 0;
             background: linear-gradient(to right, #fff, var(--primary));
@@ -50,27 +52,51 @@
             animation: fadeInUp 0.8s ease-out;
         }
 
-        .ip-box {
-            margin-top: 30px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 15px 40px;
-            border-radius: 100px;
-            cursor: pointer;
-            transition: 0.3s;
+        .cta-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 35px;
+            flex-wrap: wrap;
+            justify-content: center;
             animation: fadeInUp 1s ease-out backwards;
         }
 
-        .ip-box:hover {
-            transform: scale(1.05);
-            background: rgba(255, 255, 255, 0.1);
-            border-color: var(--primary);
-            box-shadow: 0 0 30px rgba(77, 171, 247, 0.3);
+        .ip-box {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px 35px;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: 0.3s;
         }
 
-        .ip-text { font-size: 1.4rem; font-weight: 900; letter-spacing: 1.5px; }
+        .ip-box:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary);
+        }
 
+        .discord-btn {
+            background: var(--discord);
+            color: white;
+            text-decoration: none;
+            padding: 12px 35px;
+            border-radius: 100px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
+        }
+
+        .discord-btn:hover {
+            transform: translateY(-3px);
+            filter: brightness(1.1);
+            box-shadow: 0 0 20px rgba(88, 101, 242, 0.4);
+        }
+
+        /* ステータス表示 */
         .status-wrapper {
             display: flex;
             justify-content: center;
@@ -90,84 +116,59 @@
             text-align: center;
             border: 1px solid rgba(255,255,255,0.05);
             box-shadow: 0 15px 30px rgba(0,0,0,0.4);
-            animation: fadeInUp 1.2s ease-out backwards;
         }
 
-        .status-card.onepiece { border-bottom: 4px solid var(--secondary); }
-        .status-card.connsaba { border-bottom: 4px solid var(--primary); }
+        .online-indicator { color: #51cf66; font-weight: bold; font-size: 0.75rem; margin-bottom: 8px; display: block; }
+        .player-count { font-size: 2.2rem; font-weight: 900; margin: 5px 0; }
 
-        .online-indicator {
-            color: #51cf66;
-            font-weight: bold;
-            font-size: 0.75rem;
-            margin-bottom: 12px;
-            display: block;
-        }
+        /* サーバー紹介 */
+        .container { max-width: 1000px; margin: 0 auto 80px; padding: 0 20px; }
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
+        .intro-card { background: var(--card-bg); border-radius: 24px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; }
+        .intro-card img { width: 100%; height: 200px; object-fit: cover; }
+        .card-body { padding: 25px; }
 
-        .player-count {
-            font-size: 2.2rem;
-            font-weight: 900;
-            margin: 10px 0;
-            font-family: 'Arial', sans-serif;
-            color: #fff;
-        }
+        /* ギャラリー */
+        .gallery-section { max-width: 1100px; margin: 80px auto; padding: 0 20px; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 15px; }
+        .gallery-item { height: 220px; border-radius: 15px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .gallery-item:hover img { transform: scale(1.1); }
 
-        /* 運営一覧セクション */
-        .staff-section {
-            background: rgba(255, 255, 255, 0.02);
-            padding: 80px 20px;
-            margin-bottom: 80px;
-        }
-
-        .staff-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            max-width: 900px;
-            margin: 40px auto 0;
-        }
-
-        .staff-card {
-            background: var(--card-bg);
-            padding: 30px 20px;
-            border-radius: 20px;
-            text-align: center;
+        /* 運営一覧 (修正箇所) */
+        .staff-section { background: rgba(255, 255, 255, 0.02); padding: 80px 20px; }
+        .staff-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; max-width: 900px; margin: 40px auto 0; }
+        .staff-card { 
+            background: var(--card-bg); 
+            padding: 30px 20px; 
+            border-radius: 20px; 
+            text-align: center; 
             border: 1px solid rgba(255,255,255,0.05);
             transition: 0.3s;
         }
-
-        .staff-card:hover {
-            border-color: var(--primary);
-            background: rgba(255, 255, 255, 0.04);
-        }
-
-        .staff-role {
-            font-size: 0.7rem;
-            font-weight: 900;
-            color: var(--primary);
+        .staff-card:hover { border-color: rgba(77, 171, 247, 0.3); transform: translateY(-5px); }
+        
+        /* 役職名のフォントを読みやすく修正 */
+        .staff-role { 
+            font-size: 0.75rem; 
+            font-weight: 700; 
+            color: var(--primary); 
             text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 8px;
+            letter-spacing: 1.5px; 
+            margin-bottom: 8px; 
+            opacity: 0.9;
         }
-
-        .staff-name {
-            font-size: 1.2rem;
-            font-weight: 900;
+        /* プレイヤー名のフォントを調整 */
+        .staff-name { 
+            font-size: 1.2rem; 
+            font-weight: 700; 
+            color: #fff;
         }
-
-        /* 紹介カード */
-        .container { max-width: 1000px; margin: 0 auto 100px; padding: 0 20px; }
-        .section-title { text-align: center; font-size: 2rem; margin-bottom: 40px; font-weight: 900; }
-
-        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
-        .intro-card { background: var(--card-bg); border-radius: 24px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; }
-        .intro-card img { width: 100%; height: 240px; object-fit: cover; }
-        .card-body { padding: 25px; }
 
         #toast {
             position: fixed; bottom: -80px; left: 50%; transform: translateX(-50%);
             background: white; color: black; padding: 14px 45px; border-radius: 100px;
-            font-weight: 900; box-shadow: 0 10px 30px rgba(0,0,0,0.4); transition: 0.5s; z-index: 1000;
+            font-weight: 700; box-shadow: 0 10px 30px rgba(0,0,0,0.4); transition: 0.5s; z-index: 1000;
         }
         #toast.active { bottom: 40px; }
 
@@ -176,33 +177,67 @@
 </head>
 <body>
 
-    <div id="toast">✅ IPアドレスをコピーしました</div>
+    <div id="toast">✅ IPをコピーしました</div>
 
     <header class="hero">
         <h1>こん鯖</h1>
         <p>一人で遊ぶより、みんなで創るほうが面白い。</p>
-        <div class="ip-box" onclick="copyIP('210.131.218.134')">
-            <div style="font-size: 0.6rem; opacity: 0.5; margin-bottom: 3px; font-weight: bold; letter-spacing: 2px;">CLICK TO COPY</div>
-            <div class="ip-text">210.131.218.134</div>
+        <div class="cta-container">
+            <div class="ip-box" onclick="copyIP('210.131.218.134')">
+                <div style="font-size: 0.6rem; opacity: 0.6; font-weight: bold;">SERVER IP</div>
+                <div style="font-size: 1.2rem; font-weight: 700;">210.131.218.134</div>
+            </div>
+            <a href="https://discord.gg/xzeepdFvUt" target="_blank" class="discord-btn">
+                <i class="fab fa-discord"></i> Discordに参加
+            </a>
         </div>
     </header>
 
     <div class="status-wrapper">
-        <div class="status-card connsaba">
+        <div class="status-card" style="border-bottom: 4px solid var(--primary);">
             <span class="online-indicator">● ONLINE</span>
-            <h3 style="margin: 0; font-size: 1.1rem; opacity: 0.8;">こんさば</h3>
+            <h3 style="margin:0; font-size:1rem; opacity:0.8;">こんさば</h3>
             <div class="player-count" id="count-kon">-- / --</div>
         </div>
-        <div class="status-card onepiece">
+        <div class="status-card" style="border-bottom: 4px solid var(--secondary);">
             <span class="online-indicator">● ONLINE</span>
-            <h3 style="margin: 0; font-size: 1.1rem; opacity: 0.8;">ワンピースServer</h3>
+            <h3 style="margin:0; font-size:1rem; opacity:0.8;">ワンピースServer</h3>
             <div class="player-count" id="count-piece">-- / --</div>
         </div>
     </div>
 
+    <div class="container">
+        <h2 style="text-align:center; font-weight:900; margin-bottom:30px;">SERVER GUIDE</h2>
+        <div class="card-grid">
+            <div class="intro-card">
+                <img src="connsaba.png" alt="こんさば">
+                <div class="card-body">
+                    <h3 style="margin:0 0 10px; color: var(--primary);">こんさば (生活鯖)</h3>
+                    <p style="opacity:0.7; font-size: 0.9rem;">独自アドオンで快適なサバイバルを提供。誰でも気軽に参加できるコミュニティ重視のサーバーです。</p>
+                </div>
+            </div>
+            <div class="intro-card">
+                <img src="onepiece.png" alt="ワンピースサーバー">
+                <div class="card-body">
+                    <h3 style="margin:0 0 10px; color: var(--secondary);">ワンピースServer</h3>
+                    <p style="opacity:0.7; font-size: 0.9rem;">24時間稼働。能力者となり仲間と冒険へ。マイクラで本格的なワンピースの世界を体験できます。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="gallery-section">
+        <h2 style="text-align:center; font-weight:900; margin-bottom:30px; letter-spacing: 2px;">GALLERY</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item"><img src="31d56bfb-87d4-4550-b367-167b10df218d.jpg"></div>
+            <div class="gallery-item"><img src="a42149a5-e1da-4af3-8c6b-9435decb7a7c.jpg"></div>
+            <div class="gallery-item"><img src="f6dc5a62-1f27-4865-ac52-00220667679c.jpg"></div>
+            <div class="gallery-item"><img src="f9b681b3-5b38-4478-9ae1-57308c52f8c5.jpg"></div>
+        </div>
+    </section>
+
     <section class="staff-section">
-        <h2 class="section-title" style="margin-bottom: 10px;">ADMINISTRATION</h2>
-        <p style="text-align: center; opacity: 0.5; font-size: 0.9rem;">サーバーを支える運営メンバー</p>
+        <h2 style="text-align:center; font-weight:900; margin-bottom:10px;">ADMINISTRATION</h2>
         <div class="staff-grid">
             <div class="staff-card">
                 <div class="staff-role">Owner / Admin</div>
@@ -219,26 +254,6 @@
         </div>
     </section>
 
-    <div class="container">
-        <h2 class="section-title">SERVER GUIDE</h2>
-        <div class="card-grid">
-            <div class="intro-card">
-                <img src="connsaba.png" alt="こんさば">
-                <div class="card-body">
-                    <h3 style="margin:0 0 10px;">こんさば (生活鯖)</h3>
-                    <p style="opacity:0.7; font-size: 0.9rem;">独自アドオンで快適なサバイバルを提供。誰でも気軽に参加できるコミュニティ重視のサーバーです。</p>
-                </div>
-            </div>
-            <div class="intro-card">
-                <img src="onepiece.png" alt="ワンピースサーバー">
-                <div class="card-body">
-                    <h3 style="margin:0 0 10px;">ワンピースServer</h3>
-                    <p style="opacity:0.7; font-size: 0.9rem;">24時間稼働。能力者となり仲間と冒険へ。マイクラで本格的なワンピースの世界を体験できます。</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <footer>
         <p>&copy; 2026 こん鯖 | Created by conn</p>
     </footer>
@@ -246,22 +261,22 @@
     <script>
         function copyIP(ip) {
             navigator.clipboard.writeText(ip);
-            const toast = document.getElementById('toast');
-            toast.classList.add('active');
-            setTimeout(() => { toast.classList.remove('active'); }, 2500);
+            const t = document.getElementById('toast');
+            t.classList.add('active');
+            setTimeout(() => t.classList.remove('active'), 2500);
         }
 
         async function fetchStatus() {
             try {
-                const [resKon, resPiece] = await Promise.all([
+                const [resK, resP] = await Promise.all([
                     fetch('https://api.mcsrvstat.us/bedrock/3/210.131.218.134'),
                     fetch('https://api.mcsrvstat.us/bedrock/3/162.43.47.140')
                 ]);
-                const dataKon = await resKon.json();
-                const dataPiece = await resPiece.json();
-                if(dataKon.online) document.getElementById('count-kon').innerText = `${dataKon.players.online} / ${dataKon.players.max}`;
-                if(dataPiece.online) document.getElementById('count-piece').innerText = `${dataPiece.players.online} / ${dataPiece.players.max}`;
-            } catch (error) { console.error("fetch error"); }
+                const dK = await resK.json();
+                const dP = await resP.json();
+                if(dK.online) document.getElementById('count-kon').innerText = `${dK.players.online} / ${dK.players.max}`;
+                if(dP.online) document.getElementById('count-piece').innerText = `${dP.players.online} / ${dP.players.max}`;
+            } catch (e) { console.error(e); }
         }
         fetchStatus();
         setInterval(fetchStatus, 60000);
