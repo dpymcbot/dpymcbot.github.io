@@ -11,6 +11,7 @@
             --primary: #4dabf7;
             --secondary: #ff922b;
             --kimetsu: #e84393;
+            --gun: #51cf66;
             --discord: #5865F2;
             --bg-dark: #0d1117;
             --card-bg: #161b22;
@@ -111,7 +112,7 @@
         .status-card {
             background: var(--card-bg);
             flex: 1;
-            min-width: 250px;
+            min-width: 200px; /* 4枚並びやすくするために調整 */
             padding: 25px;
             border-radius: 24px;
             text-align: center;
@@ -124,7 +125,7 @@
 
         /* サーバー紹介 */
         .container { max-width: 1100px; margin: 0 auto 80px; padding: 0 20px; }
-        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
         .intro-card { background: var(--card-bg); border-radius: 24px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; }
         .intro-card img { width: 100%; height: 180px; object-fit: cover; }
         .card-body { padding: 20px; }
@@ -193,6 +194,11 @@
             <h3 style="margin:0; font-size:0.9rem; opacity:0.8;">鬼滅の刃Server</h3>
             <div class="player-count" id="count-kimetsu">-- / --</div>
         </div>
+        <div class="status-card" style="border-bottom: 4px solid var(--gun);">
+            <span class="online-indicator">● ONLINE</span>
+            <h3 style="margin:0; font-size:0.9rem; opacity:0.8;">銃アドオンServer</h3>
+            <div class="player-count" id="count-gun">-- / --</div>
+        </div>
     </div>
 
     <div class="container">
@@ -217,6 +223,13 @@
                 <div class="card-body">
                     <h3 style="margin:0 0 10px; color: var(--kimetsu);">鬼滅の刃Server</h3>
                     <p style="opacity:0.7; font-size: 0.85rem;">24時間稼働。鬼滅の刃アドオンを導入。呼吸を極め、鬼を狩る。サバイバルでの死闘が待っています。</p>
+                </div>
+            </div>
+            <div class="intro-card">
+                <img src="zyuu.png" alt="銃アドオンサーバー">
+                <div class="card-body">
+                    <h3 style="margin:0 0 10px; color: var(--gun);">銃アドオンServer</h3>
+                    <p style="opacity:0.7; font-size: 0.85rem;">24時間稼働。最新の銃アドオンを導入したサバイバル。荒らし・窃盗禁止のクリーンな環境で本格的な銃撃戦を。</p>
                 </div>
             </div>
         </div>
@@ -264,18 +277,21 @@
 
         async function fetchStatus() {
             try {
-                const [resK, resP, resKi] = await Promise.all([
+                const [resK, resP, resKi, resG] = await Promise.all([
                     fetch('https://api.mcsrvstat.us/bedrock/3/210.131.218.134'),
                     fetch('https://api.mcsrvstat.us/bedrock/3/162.43.47.140'),
-                    fetch('https://api.mcsrvstat.us/bedrock/3/162.43.54.31')
+                    fetch('https://api.mcsrvstat.us/bedrock/3/162.43.54.31'),
+                    fetch('https://api.mcsrvstat.us/bedrock/3/85.131.247.58')
                 ]);
                 const dK = await resK.json();
                 const dP = await resP.json();
                 const dKi = await resKi.json();
+                const dG = await resG.json();
 
                 if(dK.online) document.getElementById('count-kon').innerText = `${dK.players.online} / ${dK.players.max}`;
                 if(dP.online) document.getElementById('count-piece').innerText = `${dP.players.online} / ${dP.players.max}`;
                 if(dKi.online) document.getElementById('count-kimetsu').innerText = `${dKi.players.online} / ${dKi.players.max}`;
+                if(dG.online) document.getElementById('count-gun').innerText = `${dG.players.online} / ${dG.players.max}`;
             } catch (e) { console.error(e); }
         }
         fetchStatus();
