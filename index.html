@@ -274,7 +274,6 @@
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        // パーティクルの色の不透明度をCSS変数から取得するように設定
         const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         
         particlesJS("particles-js", {
@@ -299,6 +298,7 @@
             setTimeout(() => t.classList.remove('active'), 2500);
         }
 
+        // ステータス取得の高速化 & リアルタイム化
         async function fetchStatus() {
             const servers = [
                 { id: 'kon', ip: '210.131.218.134' },
@@ -306,18 +306,34 @@
                 { id: 'kimetsu', ip: '162.43.54.31' },
                 { id: 'gun', ip: '85.131.247.58' }
             ];
-            for (const s of servers) {
-                try {
-                    const res = await fetch(`https://api.mcsrvstat.us/bedrock/3/${s.ip}`);
-                    const d = await res.json();
-                    if (d.online) {
-                        document.getElementById(`count-${s.id}`).innerText = `${d.players.online} / ${d.players.max}`;
-                        document.getElementById(`bar-${s.id}`).style.width = (d.players.online / d.players.max * 100) + "%";
-                    }
-                } catch (e) {}
-            }
+
+            // 全サーバーの情報を並列で一斉に取得（高速化）
+            const requests = servers.map(s => 
+                fetch(`https://api.mcsrvstat.us/bedrock/3/${s.ip}`)
+                    .then(res => res.json())
+                    .then(d => {
+                        const countEl = document.getElementById(`count-${s.id}`);
+                        const barEl = document.getElementById(`bar-${s.id}`);
+                        if (d.online) {
+                            countEl.innerText = `${d.players.online} / ${d.players.max}`;
+                            barEl.style.width = (d.players.online / d.players.max * 100) + "%";
+                        } else {
+                            countEl.innerText = "OFFLINE";
+                            barEl.style.width = "0%";
+                        }
+                    })
+                    .catch(() => {
+                        document.getElementById(`count-${s.id}`).innerText = "ERROR";
+                    })
+            );
+
+            await Promise.all(requests);
         }
+
+        // 初回実行
         fetchStatus();
+        // 10秒ごとに自動更新（リアルタイム化）
+        setInterval(fetchStatus, 10000);
     </script>
 </body>
 </html>
