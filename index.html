@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
+        /* --- カラー変数の定義 (ライトモード基準) --- */
         :root {
             --primary: #339af0;
             --secondary: #ff922b;
@@ -18,6 +19,24 @@
             --text-main: #2d3436;
             --text-sub: #636e72;
             --border: #eef2f7;
+            --nav-bg: rgba(255, 255, 255, 0.8);
+            --particle-opacity: 0.2;
+        }
+
+        /* --- ダークモードの設定 --- */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-light: #121212;
+                --card-bg: #1e1e1e;
+                --text-main: #f8f9fa;
+                --text-sub: #b2bec3;
+                --border: #2d3436;
+                --nav-bg: rgba(30, 30, 30, 0.8);
+                --particle-opacity: 0.1;
+            }
+            #particles-js {
+                background: linear-gradient(to bottom, #121212, #1a1a1a) !important;
+            }
         }
 
         /* スムーズスクロール */
@@ -31,6 +50,7 @@
             color: var(--text-main);
             line-height: 1.5;
             overflow-x: hidden;
+            transition: background-color 0.3s, color 0.3s; /* モード切替をスムーズに */
         }
 
         #particles-js {
@@ -43,7 +63,7 @@
         /* ナビゲーションバー: 右寄せ設定 */
         .navbar {
             position: fixed; top: 0; width: 100%; height: 60px;
-            background: rgba(255, 255, 255, 0.8);
+            background: var(--nav-bg);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--border);
             z-index: 1000;
@@ -75,7 +95,7 @@
             background: var(--card-bg); padding: 8px 30px; border-radius: 100px;
             cursor: pointer; border: 2px solid var(--primary); transition: 0.3s;
         }
-        .ip-box:hover { transform: scale(1.03); background: #f0f7ff; }
+        .ip-box:hover { transform: scale(1.03); background: var(--border); }
 
         .discord-btn {
             background: var(--discord); color: white; text-decoration: none;
@@ -94,7 +114,7 @@
             text-align: center; border: 1px solid var(--border);
         }
         .player-count { font-size: 1.3rem; font-weight: 900; margin: 2px 0; }
-        .progress-bg { width: 100%; height: 5px; background: #eee; border-radius: 10px; overflow: hidden; }
+        .progress-bg { width: 100%; height: 5px; background: var(--border); border-radius: 10px; overflow: hidden; }
         .progress-fill { height: 100%; width: 0%; transition: width 1s ease; }
 
         /* コンテンツエリア */
@@ -109,21 +129,21 @@
 
         .guide-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .guide-item {
-            display: flex; align-items: center; gap: 10px; background: white;
+            display: flex; align-items: center; gap: 10px; background: var(--card-bg);
             padding: 8px; border-radius: 12px; border: 1px solid var(--border);
         }
         .guide-item img { width: 45px; height: 45px; border-radius: 8px; object-fit: cover; }
         .guide-text b { font-size: 0.85rem; display: block; }
         .guide-text small { font-size: 0.7rem; color: var(--text-sub); display: block; }
 
-        .rules-compact { background: white; padding: 15px; border-radius: 15px; border: 1px solid var(--border); }
+        .rules-compact { background: var(--card-bg); padding: 15px; border-radius: 15px; border: 1px solid var(--border); }
         .rule-small { font-size: 0.75rem; margin-bottom: 6px; display: flex; gap: 8px; align-items: center; }
 
         /* STAFF セクション */
         .staff-section { max-width: 1000px; margin: 0 auto 50px; padding: 0 20px; }
         .staff-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
         .staff-card {
-            background: white; padding: 15px; border-radius: 15px; border: 1px solid var(--border);
+            background: var(--card-bg); padding: 15px; border-radius: 15px; border: 1px solid var(--border);
             display: flex; align-items: center; gap: 15px;
         }
         .staff-info b { display: block; font-size: 0.9rem; }
@@ -131,8 +151,8 @@
             font-size: 0.65rem; font-weight: bold; padding: 2px 8px; border-radius: 4px;
             display: inline-block; margin-bottom: 4px;
         }
-        .badge-owner { background: #fff0f6; color: #e64980; }
-        .badge-staff { background: #e7f5ff; color: #228be6; }
+        .badge-owner { background: rgba(230, 73, 128, 0.1); color: #e64980; }
+        .badge-staff { background: rgba(34, 139, 230, 0.1); color: #228be6; }
 
         #toast {
             position: fixed; bottom: -80px; left: 50%; transform: translateX(-50%);
@@ -254,11 +274,14 @@
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
+        // パーティクルの色の不透明度をCSS変数から取得するように設定
+        const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
         particlesJS("particles-js", {
             "particles": {
                 "number": { "value": 30 },
-                "color": { "value": "#339af0" },
-                "opacity": { "value": 0.2 },
+                "color": { "value": isDark ? "#ffffff" : "#339af0" },
+                "opacity": { "value": isDark ? 0.1 : 0.2 },
                 "size": { "value": 3 },
                 "move": { "enable": true, "speed": 0.8, "direction": "bottom" }
             }
