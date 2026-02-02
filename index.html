@@ -8,266 +8,267 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #4dabf7;
+            --primary: #339af0;
             --secondary: #ff922b;
-            --kimetsu: #e84393;
+            --kimetsu: #e64980;
             --gun: #51cf66;
             --discord: #5865F2;
-            --bg-dark: #0d1117;
-            --card-bg: #161b22;
-            --text-white: #f0f6fc;
+            --bg-light: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-main: #2d3436;
+            --text-sub: #636e72;
+            --border: #eef2f7;
         }
 
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        /* スムーズスクロール */
+        html { scroll-behavior: smooth; }
 
         body {
             margin: 0;
+            padding-top: 60px; /* ナビバー分 */
             font-family: 'Noto Sans JP', sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text-white);
-            line-height: 1.6;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            line-height: 1.5;
             overflow-x: hidden;
         }
 
-        /* ヒーローセクション */
-        .hero {
-            height: 65vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            background: linear-gradient(rgba(13, 17, 23, 0.75), var(--bg-dark)), url('connsaba.png') center/cover no-repeat;
-            padding: 0 20px;
+        #particles-js {
+            position: fixed;
+            width: 100%; height: 100%; top: 0; left: 0;
+            z-index: -1;
+            background: linear-gradient(to bottom, #ffffff, #f1f3f5);
         }
 
-        .hero h1 {
-            font-size: clamp(3.5rem, 12vw, 5.5rem);
-            font-weight: 900;
-            margin: 0;
-            background: linear-gradient(to right, #fff, var(--primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: fadeInUp 0.8s ease-out;
+        /* ナビゲーションバー: 右寄せ設定 */
+        .navbar {
+            position: fixed; top: 0; width: 100%; height: 60px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            display: flex; 
+            align-items: center; 
+            justify-content: flex-end; /* 右に寄せる */
+            box-sizing: border-box;
+            padding-right: 5%; /* 右側の余白 */
+            gap: 30px;
         }
+        .navbar a {
+            text-decoration: none; color: var(--text-main); font-weight: 700; font-size: 0.85rem;
+            transition: 0.3s; letter-spacing: 1px;
+        }
+        .navbar a:hover { color: var(--primary); }
 
-        .cta-container {
-            display: flex;
-            gap: 15px;
-            margin-top: 35px;
-            flex-wrap: wrap;
-            justify-content: center;
-            animation: fadeInUp 1s ease-out backwards;
+        .reveal {
+            opacity: 0; transform: translateY(15px); transition: all 0.5s ease-out;
         }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* ヒーロー */
+        .hero { padding: 30px 20px 20px; text-align: center; }
+        .hero h1 { font-size: clamp(2rem, 6vw, 3rem); font-weight: 900; margin: 0; color: var(--primary); }
+
+        .cta-container { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; justify-content: center; }
 
         .ip-box {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 12px 35px;
-            border-radius: 100px;
-            cursor: pointer;
-            transition: 0.3s;
+            background: var(--card-bg); padding: 8px 30px; border-radius: 100px;
+            cursor: pointer; border: 2px solid var(--primary); transition: 0.3s;
         }
-
-        .ip-box:hover {
-            transform: translateY(-3px);
-            background: rgba(255, 255, 255, 0.1);
-            border-color: var(--primary);
-        }
+        .ip-box:hover { transform: scale(1.03); background: #f0f7ff; }
 
         .discord-btn {
-            background: var(--discord);
-            color: white;
-            text-decoration: none;
-            padding: 12px 35px;
-            border-radius: 100px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: 0.3s;
+            background: var(--discord); color: white; text-decoration: none;
+            padding: 10px 30px; border-radius: 100px; font-weight: 700;
+            display: flex; align-items: center; gap: 8px; transition: 0.3s;
         }
+        .discord-btn:hover { transform: scale(1.03); filter: brightness(1.1); }
 
-        .discord-btn:hover {
-            transform: translateY(-3px);
-            filter: brightness(1.1);
-            box-shadow: 0 0 20px rgba(88, 101, 242, 0.4);
-        }
-
-        /* ステータス表示 */
+        /* ステータス */
         .status-wrapper {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-            max-width: 1100px;
-            margin: -40px auto 80px;
-            padding: 0 20px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 10px; max-width: 900px; margin: 0 auto 30px; padding: 0 20px;
         }
-
         .status-card {
-            background: var(--card-bg);
-            flex: 1;
-            min-width: 200px; /* 4枚並びやすくするために調整 */
-            padding: 25px;
-            border-radius: 24px;
-            text-align: center;
-            border: 1px solid rgba(255,255,255,0.05);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+            background: var(--card-bg); padding: 12px; border-radius: 18px;
+            text-align: center; border: 1px solid var(--border);
         }
+        .player-count { font-size: 1.3rem; font-weight: 900; margin: 2px 0; }
+        .progress-bg { width: 100%; height: 5px; background: #eee; border-radius: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; width: 0%; transition: width 1s ease; }
 
-        .online-indicator { color: #51cf66; font-weight: bold; font-size: 0.75rem; margin-bottom: 8px; display: block; }
-        .player-count { font-size: 2rem; font-weight: 900; margin: 5px 0; }
-
-        /* サーバー紹介 */
-        .container { max-width: 1100px; margin: 0 auto 80px; padding: 0 20px; }
-        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-        .intro-card { background: var(--card-bg); border-radius: 24px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; }
-        .intro-card img { width: 100%; height: 180px; object-fit: cover; }
-        .card-body { padding: 20px; }
-
-        /* ギャラリー */
-        .gallery-section { max-width: 1100px; margin: 80px auto; padding: 0 20px; }
-        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 15px; }
-        .gallery-item { height: 220px; border-radius: 15px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); }
-        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
-        .gallery-item:hover img { transform: scale(1.1); }
-
-        /* 運営一覧 */
-        .staff-section { background: rgba(255, 255, 255, 0.02); padding: 80px 20px; }
-        .staff-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; max-width: 900px; margin: 40px auto 0; }
-        .staff-card { 
-            background: var(--card-bg); 
-            padding: 30px 20px; 
-            border-radius: 20px; 
-            text-align: center; 
-            border: 1px solid rgba(255,255,255,0.05);
+        /* コンテンツエリア */
+        .main-content {
+            max-width: 1000px; margin: 0 auto 30px; padding: 0 20px;
+            display: grid; grid-template-columns: 1.5fr 1fr; gap: 25px;
         }
-        .staff-role { font-size: 0.75rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; }
-        .staff-name { font-size: 1.2rem; font-weight: 700; color: #fff; }
+        @media (max-width: 850px) { .main-content { grid-template-columns: 1fr; } }
+
+        .section-title { font-size: 1.2rem; font-weight: 900; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        .section-title::before { content: ''; width: 4px; height: 1.2rem; background: var(--primary); border-radius: 4px; }
+
+        .guide-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .guide-item {
+            display: flex; align-items: center; gap: 10px; background: white;
+            padding: 8px; border-radius: 12px; border: 1px solid var(--border);
+        }
+        .guide-item img { width: 45px; height: 45px; border-radius: 8px; object-fit: cover; }
+        .guide-text b { font-size: 0.85rem; display: block; }
+        .guide-text small { font-size: 0.7rem; color: var(--text-sub); display: block; }
+
+        .rules-compact { background: white; padding: 15px; border-radius: 15px; border: 1px solid var(--border); }
+        .rule-small { font-size: 0.75rem; margin-bottom: 6px; display: flex; gap: 8px; align-items: center; }
+
+        /* STAFF セクション */
+        .staff-section { max-width: 1000px; margin: 0 auto 50px; padding: 0 20px; }
+        .staff-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+        .staff-card {
+            background: white; padding: 15px; border-radius: 15px; border: 1px solid var(--border);
+            display: flex; align-items: center; gap: 15px;
+        }
+        .staff-info b { display: block; font-size: 0.9rem; }
+        .staff-info span { 
+            font-size: 0.65rem; font-weight: bold; padding: 2px 8px; border-radius: 4px;
+            display: inline-block; margin-bottom: 4px;
+        }
+        .badge-owner { background: #fff0f6; color: #e64980; }
+        .badge-staff { background: #e7f5ff; color: #228be6; }
 
         #toast {
             position: fixed; bottom: -80px; left: 50%; transform: translateX(-50%);
-            background: white; color: black; padding: 14px 45px; border-radius: 100px;
-            font-weight: 700; box-shadow: 0 10px 30px rgba(0,0,0,0.4); transition: 0.5s; z-index: 1000;
+            background: #2d3436; color: white; padding: 10px 25px; border-radius: 50px;
+            font-size: 0.85rem; transition: 0.4s; z-index: 2000;
         }
-        #toast.active { bottom: 40px; }
+        #toast.active { bottom: 20px; }
 
-        footer { text-align: center; padding: 60px 0; opacity: 0.4; font-size: 0.75rem; }
+        footer { text-align: center; padding: 30px; font-size: 0.7rem; color: var(--text-sub); }
     </style>
 </head>
 <body>
 
+    <nav class="navbar">
+        <a href="#">HOME</a>
+        <a href="#staff">STAFF</a>
+    </nav>
+
+    <div id="particles-js"></div>
     <div id="toast">✅ IPをコピーしました</div>
 
-    <header class="hero">
+    <header class="hero reveal">
         <h1>こん鯖</h1>
-        <p>一人で遊ぶより、みんなで創るほうが面白い。</p>
         <div class="cta-container">
             <div class="ip-box" onclick="copyIP('210.131.218.134')">
-                <div style="font-size: 0.6rem; opacity: 0.6; font-weight: bold;">SERVER IP (Lobby)</div>
-                <div style="font-size: 1.2rem; font-weight: 700;">210.131.218.134</div>
+                <div style="font-size: 0.5rem; color: var(--primary); font-weight: bold;">IP ADDRESS</div>
+                <div style="font-size: 1rem; font-weight: 800;">210.131.218.134</div>
             </div>
             <a href="https://discord.gg/xzeepdFvUt" target="_blank" class="discord-btn">
-                <i class="fab fa-discord"></i> Discordに参加
+                <i class="fab fa-discord"></i> Discord
             </a>
         </div>
     </header>
 
-    <div class="status-wrapper">
-        <div class="status-card" style="border-bottom: 4px solid var(--primary);">
-            <span class="online-indicator">● ONLINE</span>
-            <h3 style="margin:0; font-size:0.9rem; opacity:0.8;">こんさば</h3>
-            <div class="player-count" id="count-kon">-- / --</div>
+    <div class="status-wrapper reveal">
+        <div class="status-card">
+            <div style="font-size:0.6rem; font-weight:bold; color:var(--primary);">生活鯖</div>
+            <div class="player-count" id="count-kon">0 / 0</div>
+            <div class="progress-bg"><div id="bar-kon" class="progress-fill" style="background: var(--primary);"></div></div>
         </div>
-        <div class="status-card" style="border-bottom: 4px solid var(--secondary);">
-            <span class="online-indicator">● ONLINE</span>
-            <h3 style="margin:0; font-size:0.9rem; opacity:0.8;">ワンピースServer</h3>
-            <div class="player-count" id="count-piece">-- / --</div>
+        <div class="status-card">
+            <div style="font-size:0.6rem; font-weight:bold; color:var(--secondary);">ワンピース</div>
+            <div class="player-count" id="count-piece">0 / 0</div>
+            <div class="progress-bg"><div id="bar-piece" class="progress-fill" style="background: var(--secondary);"></div></div>
         </div>
-        <div class="status-card" style="border-bottom: 4px solid var(--kimetsu);">
-            <span class="online-indicator">● ONLINE</span>
-            <h3 style="margin:0; font-size:0.9rem; opacity:0.8;">鬼滅の刃Server</h3>
-            <div class="player-count" id="count-kimetsu">-- / --</div>
+        <div class="status-card">
+            <div style="font-size:0.6rem; font-weight:bold; color:var(--kimetsu);">鬼滅の刃</div>
+            <div class="player-count" id="count-kimetsu">0 / 0</div>
+            <div class="progress-bg"><div id="bar-kimetsu" class="progress-fill" style="background: var(--kimetsu);"></div></div>
         </div>
-        <div class="status-card" style="border-bottom: 4px solid var(--gun);">
-            <span class="online-indicator">● ONLINE</span>
-            <h3 style="margin:0; font-size:0.9rem; opacity:0.8;">銃アドオンServer</h3>
-            <div class="player-count" id="count-gun">-- / --</div>
-        </div>
-    </div>
-
-    <div class="container">
-        <h2 style="text-align:center; font-weight:900; margin-bottom:30px;">SERVER GUIDE</h2>
-        <div class="card-grid">
-            <div class="intro-card">
-                <img src="connsaba.png" alt="こんさば">
-                <div class="card-body">
-                    <h3 style="margin:0 0 10px; color: var(--primary);">こんさば (生活鯖)</h3>
-                    <p style="opacity:0.7; font-size: 0.85rem;">独自アドオンで快適なサバイバルを提供。誰でも気軽に参加できるコミュニティ重視のサーバーです。</p>
-                </div>
-            </div>
-            <div class="intro-card">
-                <img src="onepiece.png" alt="ワンピースサーバー">
-                <div class="card-body">
-                    <h3 style="margin:0 0 10px; color: var(--secondary);">ワンピースServer</h3>
-                    <p style="opacity:0.7; font-size: 0.85rem;">24時間稼働。能力者となり仲間と冒険へ。マイクラで本格的なワンピースの世界を体験できます。</p>
-                </div>
-            </div>
-            <div class="intro-card">
-                <img src="kimetu.jpeg" alt="鬼滅の刃サーバー">
-                <div class="card-body">
-                    <h3 style="margin:0 0 10px; color: var(--kimetsu);">鬼滅の刃Server</h3>
-                    <p style="opacity:0.7; font-size: 0.85rem;">24時間稼働。鬼滅の刃アドオンを導入。呼吸を極め、鬼を狩る。サバイバルでの死闘が待っています。</p>
-                </div>
-            </div>
-            <div class="intro-card">
-                <img src="zyuu.png" alt="銃アドオンサーバー">
-                <div class="card-body">
-                    <h3 style="margin:0 0 10px; color: var(--gun);">銃アドオンServer</h3>
-                    <p style="opacity:0.7; font-size: 0.85rem;">24時間稼働。銃アドオンを導入したサバイバルサーバーです。マイクラの枠を超えたリアリティのある戦闘を楽しめます。</p>
-                </div>
-            </div>
+        <div class="status-card">
+            <div style="font-size:0.6rem; font-weight:bold; color:var(--gun);">銃</div>
+            <div class="player-count" id="count-gun">0 / 0</div>
+            <div class="progress-bg"><div id="bar-gun" class="progress-fill" style="background: var(--gun);"></div></div>
         </div>
     </div>
 
-    <section class="gallery-section">
-        <h2 style="text-align:center; font-weight:900; margin-bottom:30px; letter-spacing: 2px;">GALLERY</h2>
-        <div class="gallery-grid">
-            <div class="gallery-item"><img src="31d56bfb-87d4-4550-b367-167b10df218d.jpeg"></div>
-            <div class="gallery-item"><img src="a42149a5-e1da-4af3-8c6b-9435decb7a7c.jpeg"></div>
-            <div class="gallery-item"><img src="f6dc5a62-1f27-4865-ac52-00220667679c.jpeg"></div>
-            <div class="gallery-item"><img src="f9b681b3-5b38-4478-9ae1-57308c52f8c5.jpeg"></div>
-        </div>
-    </section>
+    <div class="main-content reveal">
+        <section>
+            <h2 class="section-title">SERVER GUIDE</h2>
+            <div class="guide-grid">
+                <div class="guide-item">
+                    <img src="connsaba.png">
+                    <div class="guide-text"><b>生活鯖</b><small>メインのサバイバル</small></div>
+                </div>
+                <div class="guide-item">
+                    <img src="onepiece.png">
+                    <div class="guide-text"><b>ワンピース</b><small>能力者の冒険世界</small></div>
+                </div>
+                <div class="guide-item">
+                    <img src="kimetu.jpeg">
+                    <div class="guide-text"><b>鬼滅の刃</b><small>呼吸で鬼を狩る世界</small></div>
+                </div>
+                <div class="guide-item">
+                    <img src="zyuu.png">
+                    <div class="guide-text"><b>銃アドオン</b><small>本格銃撃サバイバル</small></div>
+                </div>
+            </div>
+        </section>
 
-    <section class="staff-section">
-        <h2 style="text-align:center; font-weight:900; margin-bottom:10px;">ADMINISTRATION</h2>
+        <section>
+            <h2 class="section-title">RULES</h2>
+            <div class="rules-compact">
+                <div class="rule-small"><i class="fas fa-check" style="color:var(--primary)"></i> 暴言・嫌がらせ禁止</div>
+                <div class="rule-small"><i class="fas fa-check" style="color:var(--primary)"></i> 荒らし・窃盗はBAN</div>
+                <div class="rule-small"><i class="fas fa-check" style="color:var(--primary)"></i> チートツールの使用禁止</div>
+                <div class="rule-small"><i class="fas fa-check" style="color:var(--primary)"></i> 鯖への負荷行為禁止</div>
+            </div>
+        </section>
+    </div>
+
+    <section id="staff" class="staff-section reveal">
+        <h2 class="section-title">STAFF LIST</h2>
         <div class="staff-grid">
             <div class="staff-card">
-                <div class="staff-role">Owner / Admin</div>
-                <div class="staff-name">maronn1219</div>
+                <div class="staff-info">
+                    <span class="badge-owner">Owner / Admin</span>
+                    <b>maronn1219</b>
+                </div>
             </div>
             <div class="staff-card">
-                <div class="staff-role">Staff</div>
-                <div class="staff-name">jumping high450</div>
+                <div class="staff-info">
+                    <span class="badge-staff">Staff</span>
+                    <b>jumping high450</b>
+                </div>
             </div>
             <div class="staff-card">
-                <div class="staff-role">Staff</div>
-                <div class="staff-name">ralifum</div>
+                <div class="staff-info">
+                    <span class="badge-staff">Staff</span>
+                    <b>ralifum</b>
+                </div>
             </div>
         </div>
     </section>
 
     <footer>
-        <p>&copy; 2026 こん鯖 | Created by conn</p>
+        &copy; 2026 こん鯖 | Have a nice day!
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 30 },
+                "color": { "value": "#339af0" },
+                "opacity": { "value": 0.2 },
+                "size": { "value": 3 },
+                "move": { "enable": true, "speed": 0.8, "direction": "bottom" }
+            }
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('active'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
         function copyIP(ip) {
             navigator.clipboard.writeText(ip);
             const t = document.getElementById('toast');
@@ -276,26 +277,24 @@
         }
 
         async function fetchStatus() {
-            try {
-                const [resK, resP, resKi, resG] = await Promise.all([
-                    fetch('https://api.mcsrvstat.us/bedrock/3/210.131.218.134'),
-                    fetch('https://api.mcsrvstat.us/bedrock/3/162.43.47.140'),
-                    fetch('https://api.mcsrvstat.us/bedrock/3/162.43.54.31'),
-                    fetch('https://api.mcsrvstat.us/bedrock/3/85.131.247.58')
-                ]);
-                const dK = await resK.json();
-                const dP = await resP.json();
-                const dKi = await resKi.json();
-                const dG = await resG.json();
-
-                if(dK.online) document.getElementById('count-kon').innerText = `${dK.players.online} / ${dK.players.max}`;
-                if(dP.online) document.getElementById('count-piece').innerText = `${dP.players.online} / ${dP.players.max}`;
-                if(dKi.online) document.getElementById('count-kimetsu').innerText = `${dKi.players.online} / ${dKi.players.max}`;
-                if(dG.online) document.getElementById('count-gun').innerText = `${dG.players.online} / ${dG.players.max}`;
-            } catch (e) { console.error(e); }
+            const servers = [
+                { id: 'kon', ip: '210.131.218.134' },
+                { id: 'piece', ip: '162.43.47.140' },
+                { id: 'kimetsu', ip: '162.43.54.31' },
+                { id: 'gun', ip: '85.131.247.58' }
+            ];
+            for (const s of servers) {
+                try {
+                    const res = await fetch(`https://api.mcsrvstat.us/bedrock/3/${s.ip}`);
+                    const d = await res.json();
+                    if (d.online) {
+                        document.getElementById(`count-${s.id}`).innerText = `${d.players.online} / ${d.players.max}`;
+                        document.getElementById(`bar-${s.id}`).style.width = (d.players.online / d.players.max * 100) + "%";
+                    }
+                } catch (e) {}
+            }
         }
         fetchStatus();
-        setInterval(fetchStatus, 60000);
     </script>
 </body>
 </html>
