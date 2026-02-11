@@ -50,7 +50,7 @@
             color: var(--text-main);
             line-height: 1.5;
             overflow-x: hidden;
-            transition: background-color 0.3s, color 0.3s; /* モード切替をスムーズに */
+            transition: background-color 0.3s, color 0.3s;
         }
 
         #particles-js {
@@ -69,9 +69,9 @@
             z-index: 1000;
             display: flex; 
             align-items: center; 
-            justify-content: flex-end; /* 右に寄せる */
+            justify-content: flex-end;
             box-sizing: border-box;
-            padding-right: 5%; /* 右側の余白 */
+            padding-right: 5%;
             gap: 30px;
         }
         .navbar a {
@@ -255,7 +255,7 @@
             </div>
             <div class="staff-card">
                 <div class="staff-info">
-                    <span class="badge-staff">Staff</span>
+                    <span class="badge-owner">Owner / Admin</span>
                     <b>jumping high450</b>
                 </div>
             </div>
@@ -263,6 +263,12 @@
                 <div class="staff-info">
                     <span class="badge-staff">Staff</span>
                     <b>ralifum</b>
+                </div>
+            </div>
+            <div class="staff-card">
+                <div class="staff-info">
+                    <span class="badge-staff">Staff</span>
+                    <b>kou10291605</b>
                 </div>
             </div>
         </div>
@@ -298,7 +304,6 @@
             setTimeout(() => t.classList.remove('active'), 2500);
         }
 
-        // ステータス取得の高速化 & リアルタイム化
         async function fetchStatus() {
             const servers = [
                 { id: 'kon', ip: '210.131.218.134' },
@@ -307,7 +312,6 @@
                 { id: 'gun', ip: '85.131.247.58' }
             ];
 
-            // 全サーバーの情報を並列で一斉に取得（高速化）
             const requests = servers.map(s => 
                 fetch(`https://api.mcsrvstat.us/bedrock/3/${s.ip}`)
                     .then(res => res.json())
@@ -330,9 +334,7 @@
             await Promise.all(requests);
         }
 
-        // 初回実行
         fetchStatus();
-        // 10秒ごとに自動更新（リアルタイム化）
         setInterval(fetchStatus, 10000);
     </script>
 </body>
