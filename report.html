@@ -28,12 +28,12 @@
             }
         }
 
-        /* バーがずれないための重要設定 */
         * { box-sizing: border-box; }
+        html { overflow-y: scroll; }
         body { 
             margin: 0; 
             padding: 0;
-            padding-top: 60px; /* バーの高さ分だけ空ける */
+            padding-top: 60px;
             font-family: 'Noto Sans JP', sans-serif; 
             background-color: var(--bg-light); 
             color: var(--text-main); 
@@ -46,7 +46,7 @@
             background: var(--nav-bg); backdrop-filter: blur(10px); 
             border-bottom: 1px solid var(--border); z-index: 1000; 
             display: flex; align-items: center; justify-content: flex-end; 
-            padding-right: 5%; gap: 20px; 
+            padding-right: 40px; gap: 20px; 
         }
         .navbar a { text-decoration: none; color: var(--text-main); font-weight: 700; font-size: 0.85rem; transition: 0.3s; }
         .navbar a:hover { color: var(--primary); }
@@ -152,7 +152,6 @@
     </div>
 
     <script>
-        // スクリプト部分は以前と同じ
         const WEBHOOK_URL = "https://discord.com/api/webhooks/1472215977398898688/o5tS5NJSTQbdUD0TD5j2CeUb-fuolE9ze0O82D_zBLzZ-RXiNYmy-l3ybty_bNR7DHpf";
         const BLOCK_LIST = []; 
         const observer = new IntersectionObserver((entries) => {
