@@ -8,20 +8,45 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #339af0; --bg-light: #f8f9fa; --card-bg: #ffffff;
-            --text-main: #2d3436; --text-sub: #636e72; --border: #eef2f7;
+            --primary: #339af0; 
+            --bg-light: #f8f9fa; 
+            --card-bg: #ffffff;
+            --text-main: #2d3436; 
+            --text-sub: #636e72; 
+            --border: #eef2f7;
             --nav-bg: rgba(255, 255, 255, 0.8);
         }
         @media (prefers-color-scheme: dark) {
             :root {
-                --bg-light: #121212; --card-bg: #1e1e1e;
-                --text-main: #f8f9fa; --text-sub: #b2bec3;
-                --border: #2d3436; --nav-bg: rgba(30, 30, 30, 0.8);
+                --bg-light: #121212; 
+                --card-bg: #1e1e1e;
+                --text-main: #f8f9fa; 
+                --text-sub: #b2bec3;
+                --border: #2d3436; 
+                --nav-bg: rgba(30, 30, 30, 0.8);
             }
         }
-        body { margin: 0; padding-top: 80px; font-family: 'Noto Sans JP', sans-serif; background-color: var(--bg-light); color: var(--text-main); }
-        .navbar { position: fixed; top: 0; width: 100%; height: 60px; background: var(--nav-bg); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); z-index: 1000; display: flex; align-items: center; justify-content: flex-end; padding-right: 5%; gap: 20px; box-sizing: border-box; }
-        .navbar a { text-decoration: none; color: var(--text-main); font-weight: 700; font-size: 0.85rem; }
+
+        * { box-sizing: border-box; }
+        html { overflow-y: scroll; }
+        body { 
+            margin: 0; 
+            padding: 0;
+            padding-top: 80px; 
+            font-family: 'Noto Sans JP', sans-serif; 
+            background-color: var(--bg-light); 
+            color: var(--text-main); 
+        }
+
+        .navbar { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 60px; 
+            background: var(--nav-bg); backdrop-filter: blur(10px); 
+            border-bottom: 1px solid var(--border); z-index: 1000; 
+            display: flex; align-items: center; justify-content: flex-end; 
+            padding-right: 40px; gap: 20px; 
+        }
+        .navbar a { text-decoration: none; color: var(--text-main); font-weight: 700; font-size: 0.85rem; transition: 0.3s; }
+        .navbar a:hover { color: var(--primary); }
         
         .container { max-width: 900px; margin: 0 auto; padding: 0 20px 60px; }
         h1 { text-align: center; font-size: 2.2rem; font-weight: 900; margin-bottom: 50px; }
@@ -34,7 +59,6 @@
         }
         .staff-detail-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
 
-        /* 正円を維持するための設定 */
         .staff-avatar { 
             width: 80px; height: 80px; 
             min-width: 80px; min-height: 80px; 
