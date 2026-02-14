@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STATUS | こん鯖 公式公式サイト</title>
+    <title>STATUS | こん鯖 公式サイト</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
@@ -27,6 +27,7 @@
             }
         }
 
+        /* ルールのスタイルを継承 */
         * { box-sizing: border-box; }
         html, body { 
             margin: 0; 
@@ -35,7 +36,8 @@
             width: 100%;
             font-family: 'Noto Sans JP', sans-serif; 
             background-color: var(--bg-light); 
-            overflow: hidden; /* スクロールバーを出さない */
+            line-height: 1.8; /* ルール側に統一 */
+            overflow: hidden;
             display: flex; 
             flex-direction: column; 
         }
@@ -51,10 +53,10 @@
         .navbar a { text-decoration: none; color: var(--text-main); font-weight: 700; font-size: 0.85rem; transition: 0.3s; }
         .navbar a:hover { color: var(--primary); }
 
-        /* iframeエリア */
+        /* iframeエリア（ナビゲーションバーとの整合性を維持） */
         .iframe-container {
             flex-grow: 1; 
-            margin-top: 60px; /* ナビバーの高さ分だけ空ける */
+            margin-top: 60px; /* バーの高さ分確保 */
             position: relative;
             width: 100%;
         }
@@ -71,15 +73,12 @@
     <nav class="navbar">
         <a href="index.html">HOME</a>
         <a href="rules.html">RULES</a>
-        <a href="staff.html">STAFF</a>
+        <a href="staff.html">スタッフ紹介</a>
         <a href="report.html">REPORT</a>
         <a href="status.html" style="color:var(--primary)">STATUS</a>
     </nav>
-
     <div class="iframe-container">
-        <div class="loading-text">
-            <i class="fas fa-spinner fa-spin"></i> パネルを読み込み中...
-        </div>
+        <div class="loading-text"><i class="fas fa-spinner fa-spin"></i> パネルを読み込み中...</div>
         <iframe src="https://xservertools.onrender.com/panel" allow="autoplay"></iframe>
     </div>
 </body>
