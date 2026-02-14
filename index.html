@@ -21,8 +21,9 @@
             }
         }
 
+        * { box-sizing: border-box; }
         html { scroll-behavior: smooth; overflow-y: scroll; }
-        body { margin: 0; padding-top: 60px; font-family: 'Noto Sans JP', sans-serif; background-color: var(--bg-light); color: var(--text-main); line-height: 1.5; overflow-x: hidden; }
+        body { margin: 0; padding: 0; padding-top: 60px; font-family: 'Noto Sans JP', sans-serif; background-color: var(--bg-light); color: var(--text-main); line-height: 1.5; overflow-x: hidden; }
         #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; }
 
         .navbar { 
@@ -30,7 +31,7 @@
             background: var(--nav-bg); backdrop-filter: blur(10px); 
             border-bottom: 1px solid var(--border); z-index: 1000; 
             display: flex; align-items: center; justify-content: flex-end; 
-            padding-right: 40px; gap: 20px; box-sizing: border-box; 
+            padding-right: 40px; gap: 20px; 
         }
         .navbar a { text-decoration: none; color: var(--text-main); font-weight: 700; font-size: 0.85rem; transition: 0.3s; }
         .navbar a:hover { color: var(--primary); }
@@ -130,19 +131,19 @@
             <h2 class="section-title">SERVER GUIDE</h2>
             <div class="guide-grid">
                 <div class="guide-item">
-                    <img src="connsaba.png" alt="生活">
+                    <img src="images/connsaba.png" alt="生活">
                     <div class="guide-text"><b>生活鯖</b><small>自由な開拓サバイバル</small></div>
                 </div>
                 <div class="guide-item">
-                    <img src="onepiece.png" alt="OP">
+                    <img src="images/onepiece.png" alt="OP">
                     <div class="guide-text"><b>ワンピース</b><small>能力者の冒険世界</small></div>
                 </div>
                 <div class="guide-item">
-                    <img src="kimetu.jpeg" alt="鬼滅">
+                    <img src="images/kimetu.jpeg" alt="鬼滅">
                     <div class="guide-text"><b>鬼滅の刃</b><small>呼吸で鬼を狩る世界</small></div>
                 </div>
                 <div class="guide-item">
-                    <img src="zyuu.png" alt="銃">
+                    <img src="images/zyuu.png" alt="銃">
                     <div class="guide-text"><b>銃アドオン</b><small>本格銃撃サバイバル</small></div>
                 </div>
             </div>
