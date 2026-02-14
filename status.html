@@ -29,19 +29,24 @@
 
         * { box-sizing: border-box; }
         
-        /* スクロールバーによる横ズレを防止しつつ、余計な隙間を消す */
-        html, body { 
+        html { 
+            /* 他のページと幅を合わせるための魔法の1行 */
+            overflow-y: scroll; 
+        }
+
+        body { 
             margin: 0; 
             padding: 0; 
             width: 100%;
-            height: 100%;
-            overflow: hidden; /* iframe自体がスクロールするので、外側は隠す */
+            height: 100vh;
+            overflow: hidden; /* body自体のスクロールは殺す */
             font-family: 'Noto Sans JP', sans-serif; 
             background-color: var(--bg-light); 
         }
 
         .navbar { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 60px; 
+            position: fixed; top: 0; left: 0; 
+            width: 100%; height: 60px; 
             background: var(--nav-bg); backdrop-filter: blur(10px); 
             border-bottom: 1px solid var(--border); z-index: 1000; 
             display: flex; align-items: center; justify-content: flex-end; 
@@ -50,11 +55,10 @@
         .navbar a { text-decoration: none; color: var(--text-main); font-weight: 700; font-size: 0.85rem; transition: 0.3s; }
         .navbar a:hover { color: var(--primary); }
 
-        /* ナビバー(60px)の下を完全に埋める設定 */
         .iframe-container {
             width: 100%;
             height: calc(100vh - 60px); 
-            margin-top: 60px; /* ナビバーの高さ分だけ下げる */
+            margin-top: 60px;
             position: relative;
         }
 
