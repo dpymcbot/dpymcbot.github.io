@@ -29,7 +29,6 @@
 
         * { box-sizing: border-box; }
         
-        /* 基本スタイルをルールページと統一 */
         html, body { 
             margin: 0; 
             padding: 0; 
@@ -44,7 +43,6 @@
             flex-direction: column; 
         }
         
-        /* ナビゲーションバー（rules.htmlのスタイルに完全統一） */
         .navbar { 
             position: fixed; top: 0; left: 0; width: 100%; height: 60px; 
             background: var(--nav-bg); backdrop-filter: blur(10px); 
@@ -55,10 +53,9 @@
         .navbar a { text-decoration: none; color: var(--text-main); font-weight: 700; font-size: 0.85rem; transition: 0.3s; }
         .navbar a:hover { color: var(--primary); }
 
-        /* コンテンツエリア */
         .iframe-container {
             flex-grow: 1; 
-            margin-top: 60px; /* バーの高さ分 */
+            margin-top: 60px; 
             position: relative;
             width: 100%;
         }
