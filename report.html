@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REPORT | こん鯖 公式サイト</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #339af0; 
+            --bg-light: #f1f3f5; 
+            --card-bg: #ffffff; 
+            --text-main: #212529; 
+            --text-sub: #495057; 
+            --border: #dee2e6;
+            --nav-bg: rgba(255, 255, 255, 0.9);
+            --soft-red: #e66767;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-light: #1a1b1e; 
+                --card-bg: #25262b; 
+                --text-main: #e9ecef; 
+                --text-sub: #ced4da; 
+                --border: #373a40; 
+                --nav-bg: rgba(37, 38, 43, 0.9);
+            }
+        }
+
+        body { margin: 0; padding-top: 80px; font-family: 'Noto Sans JP', sans-serif; background-color: var(--bg-light); color: var(--text-main); line-height: 1.7; }
+        
+        .navbar { position: fixed; top: 0; width: 100%; height: 60px; background: var(--nav-bg); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); z-index: 1000; display: flex; align-items: center; justify-content: flex-end; padding-right: 5%; gap: 25px; box-sizing: border-box; }
+        .navbar a { text-decoration: none; color: var(--text-main); font-weight: 700; font-size: 0.9rem; }
+
+        .container { max-width: 950px; margin: 0 auto; padding: 20px; display: grid; grid-template-columns: 1fr 1.3fr; gap: 40px; }
+        @media (max-width: 850px) { .container { grid-template-columns: 1fr; } }
+
+        .reveal { opacity: 0; transform: translateY(15px); transition: 0.5s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        .info-side h1 { font-size: 2.2rem; font-weight: 900; color: var(--primary); margin: 0 0 15px; }
+        .info-side p { font-size: 1rem; color: var(--text-sub); margin-bottom: 25px; }
+
+        .guideline-card { background: var(--card-bg); padding: 25px; border-radius: 16px; border: 1px solid var(--border); }
+        .guideline-title { font-weight: 900; font-size: 1.1rem; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        .guideline-list { list-style: none; padding: 0; margin: 0; font-size: 0.95rem; color: var(--text-sub); }
+        .guideline-list li { margin-bottom: 10px; display: flex; gap: 10px; }
+        .guideline-list i { color: var(--primary); margin-top: 5px; }
+        
+        .note { font-size: 0.85rem; color: var(--soft-red); margin-top: 20px; padding-top: 15px; border-top: 1px dashed var(--border); line-height: 1.5; display: block; }
+
+        .form-card { background: var(--card-bg); padding: 35px; border-radius: 20px; border: 1px solid var(--border); box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-size: 0.9rem; font-weight: 700; margin-bottom: 8px; }
+        
+        input, select, textarea {
+            width: 100%; padding: 12px 16px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg-light); color: var(--text-main); font-family: inherit; font-size: 1rem; box-sizing: border-box; transition: 0.2s;
+        }
+        input:focus, textarea:focus { outline: none; border-color: var(--primary); background: var(--card-bg); }
+        textarea { resize: vertical; min-height: 150px; }
+
+        .submit-area { position: relative; min-height: 56px; margin-top: 20px; }
+
+        .submit-btn {
+            width: 100%; height: 56px; border: none; border-radius: 10px; background: var(--primary); color: white; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 12px;
+        }
+        .submit-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+        .submit-btn:disabled { background: #adb5bd; cursor: not-allowed; transform: none; }
+
+        #msg { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            display: none; align-items: center; justify-content: center; 
+            font-size: 1rem; font-weight: 700; border-radius: 10px; 
+            animation: fadeIn 0.3s ease; 
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html">HOME</a>
+        <a href="rules.html">RULES</a>
+        <a href="staff.html">STAFF</a>
+        <a href="report.html" style="color:var(--primary)">REPORT</a>
+    </nav>
+
+    <div class="container">
+        <div class="info-side reveal">
+            <h1>REPORT</h1>
+            <p>サーバー内でのトラブル報告・バグ報告はこちらから。運営が内容を確認し、順次対応を行います。</p>
+            
+            <div class="guideline-card">
+                <div class="guideline-title"><i class="fas fa-file-alt"></i> 報告時のポイント</div>
+                <ul class="guideline-list">
+                    <li><i class="fas fa-check"></i> <div><b>対象者:</b> ゲーマータグを正確に</div></li>
+                    <li><i class="fas fa-check"></i> <div><b>場所:</b> サーバー名や座標</div></li>
+                    <li><i class="fas fa-check"></i> <div><b>詳細:</b> 具体的になにがあったか</div></li>
+                </ul>
+                <span class="note">
+                    <i class="fas fa-exclamation-triangle"></i> 画像はURLで送ることも可能ですが、正常に送信されない場合があります。確実な報告には公式Discordをご利用ください。
+                </span>
+            </div>
+        </div>
+
+        <div class="form-side reveal">
+            <div class="form-card">
+                <form id="reportForm">
+                    <div class="form-group">
+                        <label>あなたのゲーマータグ</label>
+                        <input type="text" id="reporter" placeholder="Steve123" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>対象のサーバー</label>
+                        <select id="server" required>
+                            <option value="" disabled selected>選択してください</option>
+                            <option value="生活鯖">生活鯖</option>
+                            <option value="ワンピース">ワンピース</option>
+                            <option value="鬼滅の刃">鬼滅の刃</option>
+                            <option value="銃サーバー">銃サーバー</option>
+                            <option value="ロビー/その他">ロビー/その他</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>報告内容</label>
+                        <textarea id="content" placeholder="詳細を記入してください..." required></textarea>
+                    </div>
+                    
+                    <div class="submit-area">
+                        <button type="submit" class="submit-btn" id="submitBtn">
+                            <i class="fas fa-paper-plane"></i> 運営に送信
+                        </button>
+                        <div id="msg"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const WEBHOOK_URL = "https://discord.com/api/webhooks/1472215977398898688/o5tS5NJSTQbdUD0TD5j2CeUb-fuolE9ze0O82D_zBLzZ-RXiNYmy-l3ybty_bNR7DHpf";
+        
+        // ブロックIP ["", ""];
+        const BLOCK_LIST = []; 
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('active'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        document.getElementById('reportForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            const msg = document.getElementById('msg');
+            const reporter = document.getElementById('reporter').value;
+            const server = document.getElementById('server').value;
+            const content_text = document.getElementById('content').value;
+
+            btn.disabled = true;
+            btn.style.opacity = "0"; 
+            msg.style.display = "flex";
+            msg.innerText = "送信中...";
+            msg.style.background = "var(--border)";
+            msg.style.color = "var(--text-main)";
+
+            let userIP = "取得失敗";
+            try {
+                const ipRes = await fetch('https://api.ipify.org?format=json');
+                const ipData = await ipRes.json();
+                userIP = ipData.ip;
+            } catch (err) {}
+
+            if (BLOCK_LIST.includes(userIP)) {
+                msg.innerText = "❌ 送信制限中";
+                msg.style.background = "#fff0f0";
+                msg.style.color = "var(--soft-red)";
+                return;
+            }
+
+            const payload = {
+                content: "<@&1460600001653903646> <@&1460591701763690547>",
+                embeds: [{
+                    title: "📢 通報・報告を受信しました",
+                    color: 3382256,
+                    fields: [
+                        { name: "👤 報告者", value: "`" + reporter + "`", inline: true },
+                        { name: "📍 サーバー", value: "`" + server + "`", inline: true },
+                        { name: "📝 内容", value: content_text },
+                        { name: "🌐 送信元IP", value: "`" + userIP + "`" }
+                    ],
+                    footer: { text: "こん鯖 Report System" },
+                    timestamp: new Date().toISOString()
+                }]
+            };
+
+            try {
+                const response = await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                if (response.ok) {
+                    msg.innerText = "✅ 送信が完了しました。";
+                    msg.style.background = "#d3f9d8";
+                    msg.style.color = "#2b8a3e";
+                    document.getElementById('reportForm').reset();
+                    setTimeout(() => {
+                        msg.style.display = "none";
+                        btn.disabled = false;
+                        btn.style.opacity = "1";
+                    }, 3000);
+                } else { throw new Error(); }
+            } catch (err) {
+                msg.innerText = "❌ 送信エラー";
+                msg.style.background = "#fff0f0";
+                msg.style.color = "var(--soft-red)";
+                setTimeout(() => {
+                    msg.style.display = "none";
+                    btn.disabled = false;
+                    btn.style.opacity = "1";
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+</html>
