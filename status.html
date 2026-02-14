@@ -27,8 +27,9 @@
             }
         }
 
-        /* ルールのスタイルを継承 */
         * { box-sizing: border-box; }
+        
+        /* 基本スタイルをルールページと統一 */
         html, body { 
             margin: 0; 
             padding: 0; 
@@ -36,7 +37,8 @@
             width: 100%;
             font-family: 'Noto Sans JP', sans-serif; 
             background-color: var(--bg-light); 
-            line-height: 1.8; /* ルール側に統一 */
+            color: var(--text-main);
+            line-height: 1.8; 
             overflow: hidden;
             display: flex; 
             flex-direction: column; 
@@ -53,10 +55,10 @@
         .navbar a { text-decoration: none; color: var(--text-main); font-weight: 700; font-size: 0.85rem; transition: 0.3s; }
         .navbar a:hover { color: var(--primary); }
 
-        /* iframeエリア（ナビゲーションバーとの整合性を維持） */
+        /* コンテンツエリア */
         .iframe-container {
             flex-grow: 1; 
-            margin-top: 60px; /* バーの高さ分確保 */
+            margin-top: 60px; /* バーの高さ分 */
             position: relative;
             width: 100%;
         }
@@ -73,7 +75,7 @@
     <nav class="navbar">
         <a href="index.html">HOME</a>
         <a href="rules.html">RULES</a>
-        <a href="staff.html">スタッフ紹介</a>
+        <a href="staff.html">STAFF</a>
         <a href="report.html">REPORT</a>
         <a href="status.html" style="color:var(--primary)">STATUS</a>
     </nav>
