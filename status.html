@@ -27,19 +27,16 @@
             }
         }
 
-        /* ここを index.html と完全に一致させました 
-        */
         * { box-sizing: border-box; }
-        html { scroll-behavior: smooth; overflow-y: scroll; } /* スクロールバーを強制的に出すことでズレを防止 */
+        /* staff.htmlと完全に一致 */
+        html { overflow-y: scroll; } 
         body { 
             margin: 0; 
             padding: 0; 
-            padding-top: 60px; /* ナビバーの高さ分空ける */
+            padding-top: 80px; /* ここを60pxから80pxに修正しました */
             font-family: 'Noto Sans JP', sans-serif; 
             background-color: var(--bg-light); 
             color: var(--text-main); 
-            line-height: 1.5; 
-            overflow-x: hidden; 
         }
 
         .navbar { 
@@ -52,10 +49,10 @@
         .navbar a { text-decoration: none; color: var(--text-main); font-weight: 700; font-size: 0.85rem; transition: 0.3s; }
         .navbar a:hover { color: var(--primary); }
 
-        /* ステータス画面専用の調整 */
         .iframe-container {
             width: 100%;
-            height: calc(100vh - 60px); /* 画面の高さからナビバー分を引く */
+            /* bodyのpadding-top(80px)を考慮して高さを調整 */
+            height: calc(100vh - 80px); 
             position: relative;
         }
 
