@@ -157,7 +157,8 @@
 
     <script>
         const WEBHOOK_URL = "https://discord.com/api/webhooks/1472215977398898688/o5tS5NJSTQbdUD0TD5j2CeUb-fuolE9ze0O82D_zBLzZ-RXiNYmy-l3ybty_bNR7DHpf";
-        
+        const BLOCK_LIST = ["0.0.0.0"]; 
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('active'); });
         }, { threshold: 0.1 });
@@ -167,11 +168,29 @@
             e.preventDefault();
             const btn = document.getElementById('submitBtn');
             const msg = document.getElementById('msg');
-            btn.disabled = true; btn.style.opacity = "0"; msg.style.display = "flex"; msg.innerText = "送信中...";
             
+            btn.disabled = true; 
+            btn.style.opacity = "0"; 
+            msg.style.display = "flex"; 
+            msg.innerText = "送信中...";
+            msg.style.background = "transparent";
+            msg.style.color = "var(--text-main)";
+
             let userIP = "取得失敗";
-            try { const ipRes = await fetch('https://api.ipify.org?format=json'); const ipData = await ipRes.json(); userIP = ipData.ip; } catch (err) {}
-            
+            try { 
+                const ipRes = await fetch('https://api.ipify.org?format=json'); 
+                const ipData = await ipRes.json(); 
+                userIP = ipData.ip; 
+            } catch (err) {}
+
+            if (BLOCK_LIST.includes(userIP)) {
+                msg.innerText = "❌ 送信権限がありません"; 
+                msg.style.background = "#fff0f0"; 
+                msg.style.color = "var(--soft-red)";
+                setTimeout(() => { msg.style.display = "none"; btn.disabled = false; btn.style.opacity = "1"; }, 3000);
+                return;
+            }
+
             const payload = {
                 content: "<@&1460600001653903646> <@&1460591701763690547>",
                 embeds: [{
@@ -191,12 +210,17 @@
             try {
                 const res = await fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
                 if (res.ok) {
-                    msg.innerText = "✅ 送信完了"; msg.style.background = "#d3f9d8"; msg.style.color = "#2b8a3e";
+                    msg.innerText = "✅ 送信完了"; 
+                    msg.style.background = "#d3f9d8"; 
+                    msg.style.color = "#2b8a3e";
                     document.getElementById('reportForm').reset();
                 } else { throw new Error(); }
             } catch (err) {
-                msg.innerText = "❌ エラー"; msg.style.background = "#fff0f0"; msg.style.color = "var(--soft-red)";
+                msg.innerText = "❌ エラーが発生しました"; 
+                msg.style.background = "#fff0f0"; 
+                msg.style.color = "var(--soft-red)";
             }
+            
             setTimeout(() => { msg.style.display = "none"; btn.disabled = false; btn.style.opacity = "1"; }, 3000);
         });
     </script>
