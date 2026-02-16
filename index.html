@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>こん鯖 | 公式サイト</title>
+    
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="こん鯖 | 公式サイト">
+    <meta property="og:description" content="Minecraft 統合版（Bedrock Edition）向け多機能サーバー。生活鯖、ワンピース、鬼滅の刃、銃アドオンなど、多彩なワールドで遊ぼう！">
+    <meta property="og:url" content="https://dpymcbot.github.io/"> <meta property="og:image" content="https://dpymcbot.github.io/images/connsaba.png"> <meta property="og:site_name" content="こん鯖">
+    <meta property="og:locale" content="ja_JP">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="こん鯖 | 公式サイト">
+    <meta name="twitter:description" content="多彩なゲームモードが楽しめるマイクラ統合版サーバー「こん鯖」の公式HPです。">
+    <meta name="twitter:image" content="https://dpymcbot.github.io/images/connsaba.png">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #339af0; --secondary: #ff922b; --kimetsu: #e64980; --gun: #51cf66;
+            --discord: #5865F2; --bg-light: #f8f9fa; --card-bg: #ffffff;
+            --text-main: #2d3436; --text-sub: #636e72; --border: #eef2f7;
+            --nav-bg: rgba(255, 255, 255, 0.8); --particle-opacity: 0.2;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-light: #121212; --card-bg: #1e1e1e; --text-main: #f8f9fa;
+                --text-sub: #b2bec3; --border: #2d3436; --nav-bg: rgba(30, 30, 30, 0.8);
+                --particle-opacity: 0.1;
+            }
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; overflow-y: scroll; }
+        body { margin: 0; padding: 0; padding-top: 60px; font-family: 'Noto Sans JP', sans-serif; background-color: var(--bg-light); color: var(--text-main); line-height: 1.5; overflow-x: hidden; }
+        #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; }
+
+        .navbar { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 60px; 
+            background: var(--nav-bg); backdrop-filter: blur(10px); 
+            border-bottom: 1px solid var(--border); z-index: 1000; 
+            display: flex; align-items: center; justify-content: flex-end; 
+            padding-right: 40px; gap: 20px; 
+        }
+        .navbar a { text-decoration: none; color: var(--text-main); font-weight: 700; font-size: 0.85rem; transition: 0.3s; }
+        .navbar a:hover { color: var(--primary); }
+
+        .reveal { opacity: 0; transform: translateY(15px); transition: all 0.5s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        .hero { padding: 40px 20px; text-align: center; }
+        .hero h1 { font-size: clamp(2.5rem, 8vw, 4rem); font-weight: 900; margin: 0; color: var(--primary); letter-spacing: -1px; }
+
+        .cta-container { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; justify-content: center; }
+        .ip-box { background: var(--card-bg); padding: 10px 30px; border-radius: 100px; cursor: pointer; border: 2px solid var(--primary); transition: 0.3s; box-shadow: 0 4px 15px rgba(51, 154, 240, 0.2); }
+        .ip-box:hover { transform: translateY(-3px); background: var(--border); }
+
+        .discord-btn { background: var(--discord); color: white; text-decoration: none; padding: 12px 30px; border-radius: 100px; font-weight: 700; display: flex; align-items: center; gap: 8px; transition: 0.3s; }
+        .discord-btn:hover { transform: translateY(-3px); filter: brightness(1.1); }
+
+        .status-wrapper { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; max-width: 900px; margin: 0 auto 40px; padding: 0 20px; }
+        .status-card { background: var(--card-bg); padding: 15px; border-radius: 18px; text-align: center; border: 1px solid var(--border); }
+        .player-count { font-size: 1.4rem; font-weight: 900; margin: 4px 0; }
+        .progress-bg { width: 100%; height: 6px; background: var(--border); border-radius: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; width: 0%; transition: width 1s ease; }
+
+        .main-content { max-width: 1000px; margin: 0 auto 40px; padding: 0 20px; display: grid; grid-template-columns: 1.5fr 1fr; gap: 30px; }
+        @media (max-width: 850px) { .main-content { grid-template-columns: 1fr; } }
+
+        .section-title { font-size: 1.3rem; font-weight: 900; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        .section-title::before { content: ''; width: 5px; height: 1.3rem; background: var(--primary); border-radius: 4px; }
+
+        .guide-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .guide-item { display: flex; align-items: center; gap: 12px; background: var(--card-bg); padding: 10px; border-radius: 15px; border: 1px solid var(--border); transition: 0.3s; }
+        .guide-item:hover { border-color: var(--primary); transform: translateX(5px); }
+        .guide-item img { width: 50px; height: 50px; border-radius: 10px; object-fit: cover; }
+        .guide-text b { font-size: 0.9rem; display: block; }
+        .guide-text small { font-size: 0.75rem; color: var(--text-sub); display: block; }
+
+        .rules-compact { background: var(--card-bg); padding: 20px; border-radius: 20px; border: 1px solid var(--border); }
+        .rule-small { font-size: 0.8rem; margin-bottom: 8px; display: flex; gap: 10px; align-items: center; }
+
+        #toast { position: fixed; bottom: -80px; left: 50%; transform: translateX(-50%); background: #2d3436; color: white; padding: 12px 30px; border-radius: 50px; font-size: 0.9rem; transition: 0.4s; z-index: 2000; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+        #toast.active { bottom: 30px; }
+
+        footer { text-align: center; padding: 40px; font-size: 0.75rem; color: var(--text-sub); border-top: 1px solid var(--border); }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" style="color:var(--primary)">HOME</a>
+        <a href="rules.html">RULES</a>
+        <a href="staff.html">STAFF</a>
+        <a href="report.html">REPORT</a>
+        <a href="status.html">STATUS</a>
+    </nav>
+
+    <div id="particles-js"></div>
+    <div id="toast">✅ IPをコピーしました</div>
+
+    <header class="hero reveal">
+        <h1>こん鯖</h1>
+        <div class="cta-container">
+            <div class="ip-box" onclick="copyIP('210.131.220.199')">
+                <div style="font-size: 0.6rem; color: var(--primary); font-weight: 800; letter-spacing: 1px;">SERVER IP ADDRESS</div>
+                <div style="font-size: 1.1rem; font-weight: 900;">210.131.220.199</div>
+            </div>
+            <a href="https://discord.gg/xzeepdFvUt" target="_blank" class="discord-btn">
+                <i class="fab fa-discord"></i>公式Discordに参加
+            </a>
+        </div>
+    </header>
+
+    <div class="status-wrapper reveal">
+        <div class="status-card">
+            <div style="font-size:0.7rem; font-weight:bold; color:var(--primary);">生活鯖</div>
+            <div class="player-count" id="count-kon">0 / 0</div>
+            <div class="progress-bg"><div id="bar-kon" class="progress-fill" style="background: var(--primary);"></div></div>
+        </div>
+        <div class="status-card">
+            <div style="font-size:0.7rem; font-weight:bold; color:var(--secondary);">ワンピース</div>
+            <div class="player-count" id="count-piece">0 / 0</div>
+            <div class="progress-bg"><div id="bar-piece" class="progress-fill" style="background: var(--secondary);"></div></div>
+        </div>
+        <div class="status-card">
+            <div style="font-size:0.7rem; font-weight:bold; color:var(--kimetsu);">鬼滅の刃</div>
+            <div class="player-count" id="count-kimetsu">0 / 0</div>
+            <div class="progress-bg"><div id="bar-kimetsu" class="progress-fill" style="background: var(--kimetsu);"></div></div>
+        </div>
+        <div class="status-card">
+            <div style="font-size:0.7rem; font-weight:bold; color:var(--gun);">銃</div>
+            <div class="player-count" id="count-gun">0 / 0</div>
+            <div class="progress-bg"><div id="bar-gun" class="progress-fill" style="background: var(--gun);"></div></div>
+        </div>
+    </div>
+
+    <div class="main-content reveal">
+        <section>
+            <h2 class="section-title">SERVER GUIDE</h2>
+            <div class="guide-grid">
+                <div class="guide-item">
+                    <img src="images/connsaba.png" alt="生活">
+                    <div class="guide-text"><b>生活鯖</b><small>自由な開拓サバイバル</small></div>
+                </div>
+                <div class="guide-item">
+                    <img src="images/onepiece.png" alt="OP">
+                    <div class="guide-text"><b>ワンピース</b><small>能力者の冒険世界</small></div>
+                </div>
+                <div class="guide-item">
+                    <img src="images/kimetu.jpeg" alt="鬼滅">
+                    <div class="guide-text"><b>鬼滅の刃</b><small>呼吸で鬼を狩る世界</small></div>
+                </div>
+                <div class="guide-item">
+                    <img src="images/zyuu.png" alt="銃">
+                    <div class="guide-text"><b>銃アドオン</b><small>本格銃撃サバイバル</small></div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title">QUICK RULES</h2>
+            <div class="rules-compact">
+                <div class="rule-small"><i class="fas fa-check-circle" style="color:var(--primary)"></i> 暴言・誹謗中傷の禁止</div>
+                <div class="rule-small"><i class="fas fa-check-circle" style="color:var(--primary)"></i> 荒らし行為・窃盗の禁止</div>
+                <div class="rule-small"><i class="fas fa-check-circle" style="color:var(--primary)"></i> チートツールの使用禁止</div>
+                <div class="rule-small"><i class="fas fa-check-circle" style="color:var(--primary)"></i> 過度な負荷をかける行為禁止</div>
+                <a href="rules.html" style="display:block; margin-top:15px; font-size:0.75rem; color:var(--primary); font-weight:bold; text-decoration:none;">詳細なルールを見る →</a>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        &copy; 2026 こん鯖 | Developed for Minecraft Bedrock Edition
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 30 },
+                "color": { "value": isDark ? "#ffffff" : "#339af0" },
+                "opacity": { "value": isDark ? 0.1 : 0.2 },
+                "size": { "value": 3 },
+                "move": { "enable": true, "speed": 0.8, "direction": "bottom" }
+            }
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('active'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        function copyIP(ip) {
+            navigator.clipboard.writeText(ip);
+            const t = document.getElementById('toast');
+            t.classList.add('active');
+            setTimeout(() => t.classList.remove('active'), 2500);
+        }
+
+        async function fetchStatus() {
+            const servers = [
+                { id: 'kon', ip: '210.131.218.134' },
+                { id: 'piece', ip: '162.43.47.140' },
+                { id: 'kimetsu', ip: '162.43.54.31' },
+                { id: 'gun', ip: '85.131.247.58' }
+            ];
+
+            const requests = servers.map(s => 
+                fetch(`https://api.mcsrvstat.us/bedrock/3/${s.ip}`)
+                    .then(res => res.json())
+                    .then(d => {
+                        const countEl = document.getElementById(`count-${s.id}`);
+                        const barEl = document.getElementById(`bar-${s.id}`);
+                        if (d.online) {
+                            countEl.innerText = `${d.players.online} / ${d.players.max}`;
+                            barEl.style.width = (d.players.online / d.players.max * 100) + "%";
+                        } else {
+                            countEl.innerText = "OFFLINE";
+                            barEl.style.width = "0%";
+                        }
+                    })
+                    .catch(() => {
+                        document.getElementById(`count-${s.id}`).innerText = "ERROR";
+                    })
+            );
+            await Promise.all(requests);
+        }
+
+        fetchStatus();
+        setInterval(fetchStatus, 30000);
+    </script>
+</body>
+</html>
